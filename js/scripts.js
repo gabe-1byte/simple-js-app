@@ -13,4 +13,4 @@ for(let i = 0; i < pokemonList.length; i++){
         heightMessage = '';
     }
     document.write("<p>" + `${pokemonList[i].name}: ${pokemonList[i].height}` + heightMessage + "</p>")
-}
+};

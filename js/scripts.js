@@ -7,10 +7,11 @@ let pokemonList = [
 //Pokemon length and height loop
 let heightMessage;
 
-for(let i = 0; i < pokemonList.length; i++){
-    if(pokemonList[i].height > 12){heightMessage = '- Wow, thats big!';
+function pokemonLoopFunction(pokemonList) {
+    if(pokemonList.height > 12){heightMessage = "- Wow, that's big!";
     } else {
         heightMessage = '';
     }
-    document.write("<p>" + `${pokemonList[i].name}: ${pokemonList[i].height}` + heightMessage + "</p>")
-};
+    document.write('<p>' + `${pokemonList.name}: ${pokemonList.height}` + heightMessage + '</p>')
+}
+pokemonList.forEach(pokemonLoopFunction)

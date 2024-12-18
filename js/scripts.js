@@ -29,7 +29,7 @@ let pokemonRepository = (function () {
     // Function that displays pokemon details when clicked
     function addEventListenerButton(button, pokemon){
         button.addEventListener('click', function (){
-            showDetails(pokemon);
+            showDetails(pokemon.name);
         });
     }
 

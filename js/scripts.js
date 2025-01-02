@@ -1,10 +1,7 @@
 //IIFE Array start
 let pokemonRepository = (function () {
-    let pokemonList = [
-    {name: 'Charizard', height: 67, type:['fire','flying']},
-    {name: 'Diglett', height: 8, type:['ground', 'steel']},
-    {name: 'Magnemite', height: 12, type:['electric','steel']}
-    ];
+    let pokemonList = [];
+    let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
     function getAll() {
         return pokemonList;
@@ -34,23 +31,66 @@ let pokemonRepository = (function () {
     }
 
     function showDetails(pokemon) {
-        console.log(pokemon);
+        loadDetails(pokemon).then(function () {
+            console.log(pokemon);
+        });
+    }
+
+    // pokemon api
+    function loadList() {
+        return fetch(apiUrl).then(function (response) {
+            return response.json();
+        }).then(function (json) {
+            json.results.forEach(function (item) {
+                let pokemon = {
+                    name: item.name,
+                    detailsUrl: item.url
+                };
+                add(pokemon);
+            });
+        }).catch(function (e) {
+            console.error(e);
+        })
+    }
+
+    function loadDetails(item) {
+        let url = item.detailsUrl;
+        return fetch(url).then(function (response) {
+            return response.json();
+        }).then(function (details) {
+            //add details to the item
+            item.imageUrl = details.sprites.front_default;
+            item.height = details.height;
+            item.types = details.types;
+        }).catch(function (e) {
+            console.error(e);
+        });
     }
     // Make accessible outside function
     return {
         add: add,
         getAll: getAll,
         addListItem: addListItem,
+        loadList: loadList,
+        loadDetails: loadDetails,
+        showDetails, showDetails
     };
 })(); //IIFE array end
 
-pokemonRepository.add({ name: 'Squirtle', height: 20, type:['water']});
+// pokemonRepository.add({ name: 'Squirtle', height: 20, type:['water']});
 
-//Pokemon length and height loop
-let heightMessage;
+//load the pokemon api
+pokemonRepository.loadList().then(function() {
+    pokemonRepository.getAll().forEach(function(pokemon){
+        pokemonRepository.addListItem(pokemon);
+    });
+});
+
+// //Pokemon length and height loop
+// let heightMessage;
 
 let pokemon = pokemonRepository.getAll();
 
-pokemonRepository.getAll().forEach(function (pokemon) {
-    pokemonRepository.addListItem(pokemon);
-});
+// pokemonRepository.getAll().forEach(function (pokemon) {
+//     pokemonRepository.addListItem(pokemon);
+// });

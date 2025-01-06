@@ -8,8 +8,14 @@ let pokemonRepository = (function () {
     }
 
     function add(pokemon) {
-        {
+        if (
+            typeof pokemon === 'object' &&
+            'name' in pokemon &&
+            'detailsUrl' in pokemon
+        ) {
             pokemonList.push(pokemon);
+        } else {
+            console.log('Pokemon is incorrect')
         }
     }
     // Function to create pokemon details w/ button displaying name
@@ -26,7 +32,7 @@ let pokemonRepository = (function () {
     // Function that displays pokemon details when clicked
     function addEventListenerButton(button, pokemon){
         button.addEventListener('click', function (){
-            showDetails(pokemon.name);
+            showDetails(pokemon);
         });
     }
 

@@ -37,9 +37,7 @@ let pokemonRepository = (function () {
     }
 
     function showDetails(pokemon) {
-        loadDetails(pokemon).then(function () {
-            console.log(pokemon);
-        });
+        showModal(pokemon);
     }
 
     // pokemon api
@@ -59,6 +57,7 @@ let pokemonRepository = (function () {
         })
     }
 
+    // fetches list from api
     function loadDetails(item) {
         let url = item.detailsUrl;
         return fetch(url).then(function (response) {
@@ -72,6 +71,99 @@ let pokemonRepository = (function () {
             console.error(e);
         });
     }
+
+    // Details modal about pokemon that was clicked
+    function showModal(pokemon) {
+        let modalContainer = document.querySelector('#modal-container');
+
+        // Clear all existing modal content
+        modalContainer.innerHTML = '';
+
+        let modal = document.createElement('div');
+        modal.classList.add('modal');
+        modalContainer.appendChild(modal);
+
+        // Add the new modal content
+        loadDetails(pokemon).then(function () {
+            console.log(pokemon);
+
+            let image = document.createElement('img');
+            image.src = pokemon.imageUrl
+            image.classList.add('pokemon-image');
+            imageDiv.appendChild(image);
+
+            let titleElement = document.createElement('h2');
+            titleElement.innerText = pokemon.name;
+            detailsDiv.appendChild(titleElement);
+
+            let pokemonDetails = document.createElement('div');
+            pokemonDetails.classList.add('pokemon-details');
+            detailsDiv.appendChild(pokemonDetails);
+
+            let height = document.createElement('p');
+            height.innerText = `Height: ${pokemon.height}`;
+            pokemonDetails.appendChild(height);
+
+            let length = document.createElement('p');
+            length.innerText = `Length: ${pokemon.types.length}`;
+            pokemonDetails.appendChild(length);
+        })
+
+        let imageDiv = document.createElement('div');
+        imageDiv.classList.add('modal-image');
+        let detailsDiv = document.createElement('div');
+        detailsDiv.classList.add('modal-details');
+        modal.appendChild(imageDiv);
+        modal.appendChild(detailsDiv);
+
+        // loadDetails(pokemon).then(function () {
+        //     console.log(pokemon);
+
+        //     let image = document.createElement('img');
+        //     image.src = pokemon.imageUrl
+        //     image.classList.add('pokemon-image');
+        //     imageDiv.appendChild(image);
+
+        //     let titleElement = document.createElement('h2');
+        //     titleElement.innerText = pokemon.name;
+        //     detailsDiv.appendChild(titleElement);
+
+        //     let contentElement = document.createElement('p');
+        //     contentElement.innerText = pokemon.height, pokemon.length;
+        // })
+        let closeButtonElement = document.createElement('button');
+        closeButtonElement.classList.add('modal-close');
+        closeButtonElement.innerText = 'Close';
+        closeButtonElement.addEventListener('click', hideModal);
+
+
+        modal.appendChild(closeButtonElement);
+
+        modalContainer.classList.add('is-visible');
+
+        // Event listener to close when cliced outside of modal
+        modalContainer.addEventListener('click', (e) => {
+            let target = e.target;
+            if (target === modalContainer) {
+                hideModal();
+            }
+        });
+    }
+
+    window.addEventListener('keydown', (e) => {
+        let modalContainer = document.querySelector('#modal-container');
+        if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
+            hideModal();
+        }
+    })
+
+    function hideModal() {
+        let modalContainer = document.querySelector('#modal-container');
+        modalContainer.classList.remove('is-visible');
+        modalContainer.innerHTML = '';
+        document.body.style.overflow = 'visible';
+    }
+
     // Make accessible outside function
     return {
         add: add,

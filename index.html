@@ -12,8 +12,29 @@
   <body>
     <h1>Pokedex</h1>
     <div id="modal-container"></div>
+    <div class="modal fade" id="pokemonDetailsModal" tabindex="-1" role="dialog" aria-labelledby="pokemonModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="pokemonModalLabel">Pokemon Details:</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <img id="pokemonImage" src="#" alt="pokemon image" class="img-fluid">
+            <p id="pokemonHeight"></p>
+            <p id="pokemonTypes"></p>
+            <p id="pokemonLength"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <ul class="pokemon-list"></ul>
+    <ul class="pokemon-list list-group"></ul>
 
     <!--jQuery link-->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>

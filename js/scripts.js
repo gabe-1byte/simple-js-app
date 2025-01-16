@@ -79,7 +79,7 @@ let pokemonRepository = (function () {
         modalTitle.innerText = title;
         pokemonDetailsDisplay.innerText = text;
         pokemonImageFront.setAttribute('src', img);
-        pokemonImageBack.setAttribute('src', img);
+        // pokemonImageBack.setAttribute('src', img);
     }
 
 

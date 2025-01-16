@@ -12,7 +12,7 @@
   <body>
     <h1>Pokedex</h1>
     <div id="modal-container"></div>
-    <div class="modal fade" id="pokemonDetailsModal" tabindex="-1" role="dialog" aria-labelledby="pokemonModalLabel" aria-hidden="true">
+    <div class="modal fade" id="pokemonDetailsModal" tabindex="1" role="dialog" aria-labelledby="pokemonModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -21,11 +21,10 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            <img id="pokemonImage" src="#" alt="pokemon image" class="img-fluid">
-            <p id="pokemonHeight"></p>
-            <p id="pokemonTypes"></p>
-            <p id="pokemonLength"></p>
+          <div class="modal-body" id="modalContent">
+            <img id="pokemonImageFront" src="#" alt="pokemon image" class="img-fluid">
+            <img id="pokemonImageBack" src="#" alt="pokemon image" class="img-fluid">
+            <p id="pokemonDetailsDisplay"></p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

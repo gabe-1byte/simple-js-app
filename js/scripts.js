@@ -43,7 +43,7 @@ let pokemonRepository = (function () {
             json.results.forEach(function (item) {
                 let pokemon = {
                     name: item.name,
-                    detailsUrl: item.url
+                    detailsUrl: item.url,
                 };
                 add(pokemon);
             });
@@ -60,10 +60,9 @@ let pokemonRepository = (function () {
         }).then(function (details) {
             //add details to the item
             item.imageUrlFront = details.sprites.front_default;
-            item.imageUrlBack = details.sprites.back_default;
             item.height = details.height;
             item.types = details.types;
-            item.length = pokemon.types.length
+            item.length = details.types.length
         }).catch(function (e) {
             console.error(e);
         });
@@ -73,27 +72,25 @@ let pokemonRepository = (function () {
     function showModal(title, text, img) {
         let modalTitle = document.querySelector('#pokemonModalLabel');
         let modalBody = document.querySelector('.modal-body');
-        let pokemonHeight = document.querySelector('#pokemonHeight');
-        let pokemonTypes = document.querySelector('#pokemonTypes');
-        let pokemonLength = document.querySelector('#pokemonLength');
-        let pokemonImage = document.querySelector("#pokemonImage");
+
+        let pokemonImageFront = document.querySelector('#pokemonImageFront');
+        let pokemonImageBack = document.querySelector('#pokemonImageBack');
         
         modalTitle.innerText = title;
-        pokemonHeight.innerText = text;
-        pokemonTypes.innerText = text;
-        pokemonLength.innerText = text;
-        pokemonImage.setAttribute('src', img);
+        pokemonDetailsDisplay.innerText = text;
+        pokemonImageFront.setAttribute('src', img);
+        pokemonImageBack.setAttribute('src', img);
     }
 
 
     function showDetails(pokemon) {
         loadDetails(pokemon).then(function () {
             showModal(pokemon.name,
-                "Height: " + pokemon.height,
-                "Types: " +pokemon.types,
-                "Length: "+ pokemon.length,
-                pokemon.imageUrlFront, pokemon.imageUrlBack);
-                $('#pokemonDetailsModal').modal('show');
+                `Height: ${pokemon.height}
+                Length: ${pokemon.types.length}`,
+                pokemon.imageUrlFront,
+                pokemon.pokemonImageBack,
+                $('#pokemonDetailsModal').modal('show'));
         });
     }    
 
@@ -114,5 +111,3 @@ pokemonRepository.loadList().then(function() {
         pokemonRepository.addListItem(pokemon);
     });
 });
-
-let pokemon = pokemonRepository.getAll();

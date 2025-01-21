@@ -60,6 +60,7 @@ let pokemonRepository = (function () {
         }).then(function (details) {
             //add details to the item
             item.imageUrlFront = details.sprites.front_default;
+            item.imageUrlBack = details.sprites.back_default;
             item.height = details.height;
             item.types = details.types;
             item.length = details.types.length
@@ -69,7 +70,7 @@ let pokemonRepository = (function () {
     }
 
     // Details modal about pokemon that was clicked
-    function showModal(title, text, img) {
+    function showModal(title, text, imgFront, imgBack) {
         let modalTitle = document.querySelector('#pokemonModalLabel');
         let modalBody = document.querySelector('.modal-body');
 
@@ -78,8 +79,8 @@ let pokemonRepository = (function () {
         
         modalTitle.innerText = title;
         pokemonDetailsDisplay.innerText = text;
-        pokemonImageFront.setAttribute('src', img);
-        // pokemonImageBack.setAttribute('src', img);
+        pokemonImageFront.setAttribute('src', imgFront);
+        pokemonImageBack.setAttribute('src', imgBack);
     }
 
 
@@ -89,7 +90,7 @@ let pokemonRepository = (function () {
                 `Height: ${pokemon.height}
                 Length: ${pokemon.types.length}`,
                 pokemon.imageUrlFront,
-                pokemon.pokemonImageBack,
+                pokemon.imageUrlBack,
                 $('#pokemonDetailsModal').modal('show'));
         });
     }    
